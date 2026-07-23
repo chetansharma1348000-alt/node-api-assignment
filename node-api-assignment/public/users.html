@@ -1,119 +1,140 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Registered Users
-    </title>
-
+    <title>User List</title>
 
     <link rel="stylesheet" href="/css/style.css">
-
-
 </head>
-
 
 <body>
 
+    <div class="users-page-container">
 
-    <div class="table-container">
+        <!-- Back Button -->
+        <a href="/" class="back-button">
+            ← Create New User
+        </a>
 
-
-        <h1>
-            Registered Users
+        <!-- Main Heading -->
+        <h1 class="user-list-title">
+            User List
         </h1>
 
 
-        <a href="/" class="back-button">
+        <!-- ===================================== -->
+        <!-- LIVE CONNECTED USERS -->
+        <!-- ===================================== -->
 
-            Add New User
+        <section class="live-users-section">
 
-        </a>
+            <h2 class="live-users-title">
+                <span class="live-dot"></span>
+                Live Users
+            </h2>
 
+            <!-- Socket.IO live users yahan show honge -->
+            <div id="liveUsersBody" class="live-users-container">
 
+                <div class="waiting-message">
+                    Waiting for live users...
+                </div>
 
-        <table>
+            </div>
 
-
-            <thead>
-
-
-                <tr>
-
-                    <th>
-                        First Name
-                    </th>
-
-                    <th>
-                        Last Name
-                    </th>
-
-                    <th>
-                        Mobile
-                    </th>
-
-                    <th>
-                        Email
-                    </th>
-
-                    <th>
-                        Address
-                    </th>
-
-                    <th>
-                        Login ID
-                    </th>
-
-                    <th>
-                        Creation Time
-                    </th>
-
-                    <th>
-                        Last Updated
-                    </th>
-
-                </tr>
+        </section>
 
 
-            </thead>
+        <!-- ===================================== -->
+        <!-- ALL MONGODB REGISTERED USERS -->
+        <!-- ===================================== -->
+
+        <section class="registered-users-section">
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+                        <th>First Name</th>
+
+                        <th>Last Name</th>
+
+                        <th>Mobile</th>
+
+                        <th>Email</th>
+
+                        <th>City</th>
+
+                        <th>State</th>
+
+                        <th>Country</th>
+                    </tr>
+
+                </thead>
 
 
+                <tbody id="userTableBody">
 
-            <tbody id="userTableBody">
+                    <tr>
 
+                        <td colspan="7" class="loading-users">
 
-                <tr>
+                            Loading registered users...
 
-                    <td colspan="8">
+                        </td>
 
-                        Loading users...
+                    </tr>
 
-                    </td>
+                </tbody>
 
-                </tr>
+            </table>
 
-
-            </tbody>
-
-
-        </table>
-
+        </section>
 
     </div>
 
 
+    <!-- ===================================== -->
+    <!-- USER DETAILS POPUP -->
+    <!-- ===================================== -->
 
+    <div id="userModal" class="user-modal">
+
+        <div class="user-modal-content">
+
+            <h2>
+                User Details
+            </h2>
+
+            <div id="userDetails">
+            </div>
+
+            <button
+                type="button"
+                id="closeModal"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 
-    <script src="/js/users.js"></script>
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
 
+
+    <!-- Task 2 JavaScript -->
+    <script src="/js/users.js"></script>
 
 </body>
 

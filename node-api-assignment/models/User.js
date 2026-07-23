@@ -8,20 +8,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "First name is required"],
             trim: true,
-            match: [
-                onlyLettersRegex,
-                "First name must contain letters only"
-            ]
+            match: [onlyLettersRegex, "First name must contain letters only"]
         },
 
         lastName: {
             type: String,
             required: [true, "Last name is required"],
             trim: true,
-            match: [
-                onlyLettersRegex,
-                "Last name must contain letters only"
-            ]
+            match: [onlyLettersRegex, "Last name must contain letters only"]
         },
 
         mobile: {
@@ -55,30 +49,21 @@ const userSchema = new mongoose.Schema(
                 type: String,
                 required: [true, "City is required"],
                 trim: true,
-                match: [
-                    onlyLettersRegex,
-                    "City must contain letters only"
-                ]
+                match: [onlyLettersRegex, "City must contain letters only"]
             },
 
             state: {
                 type: String,
                 required: [true, "State is required"],
                 trim: true,
-                match: [
-                    onlyLettersRegex,
-                    "State must contain letters only"
-                ]
+                match: [onlyLettersRegex, "State must contain letters only"]
             },
 
             country: {
                 type: String,
                 required: [true, "Country is required"],
                 trim: true,
-                match: [
-                    onlyLettersRegex,
-                    "Country must contain letters only"
-                ]
+                match: [onlyLettersRegex, "Country must contain letters only"]
             }
         },
 
@@ -100,7 +85,6 @@ const userSchema = new mongoose.Schema(
                 6,
                 "Password must contain at least 6 characters"
             ],
-
             validate: {
                 validator: function (value) {
                     const passwordRegex =

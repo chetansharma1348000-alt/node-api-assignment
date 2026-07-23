@@ -4,165 +4,315 @@ $(document).ready(function () {
 
     console.log("jQuery loaded successfully");
 
-    // Allow only letters and spaces while typing
-    $("#firstName, #lastName, #city, #state, #country").on("input", function () {
-        let value = $(this).val();
+    // Letters and spaces only
+    $("#firstName, #lastName, #city, #state, #country")
+        .on("input", function () {
 
-        // Remove numbers and special characters
-        value = value.replace(/[^A-Za-z\s]/g, "");
+            let value = $(this).val();
 
-        $(this).val(value);
-    });
+            value = value.replace(
+                /[^A-Za-z\s]/g,
+                ""
+            );
 
-    // Allow only numbers in mobile field
+            $(this).val(value);
+        });
+
+
+    // Mobile numbers only
     $("#mobile").on("input", function () {
+
         let value = $(this).val();
 
-        value = value.replace(/[^0-9]/g, "");
+        value = value.replace(
+            /[^0-9]/g,
+            ""
+        );
 
-        // Maximum 10 digits
         value = value.slice(0, 10);
 
         $(this).val(value);
     });
 
+
+    // FORM SUBMIT
     $("#userForm").submit(function (event) {
 
         event.preventDefault();
 
-        // Get values
-        const firstName = $("#firstName").val().trim();
-        const lastName = $("#lastName").val().trim();
-        const mobile = $("#mobile").val().trim();
-        const email = $("#email").val().trim();
-        const street = $("#street").val().trim();
-        const city = $("#city").val().trim();
-        const state = $("#state").val().trim();
-        const country = $("#country").val().trim();
-        const loginId = $("#loginId").val().trim();
-        const password = $("#password").val();
+        console.log("Form submitted");
+
+
+        // Get Form Values
+        const firstName =
+            $("#firstName").val().trim();
+
+        const lastName =
+            $("#lastName").val().trim();
+
+        const mobile =
+            $("#mobile").val().trim();
+
+        const email =
+            $("#email").val().trim();
+
+        const street =
+            $("#street").val().trim();
+
+        const city =
+            $("#city").val().trim();
+
+        const state =
+            $("#state").val().trim();
+
+        const country =
+            $("#country").val().trim();
+
+        const loginId =
+            $("#loginId").val().trim();
+
+        const password =
+            $("#password").val();
+
 
         // Validation Regex
-        const textRegex = /^[A-Za-z\s]+$/;
-        const mobileRegex = /^[0-9]{10}$/;
-        const loginRegex = /^[A-Za-z0-9]{8}$/;
+        const textRegex =
+            /^[A-Za-z\s]+$/;
+
+        const mobileRegex =
+            /^[0-9]{10}$/;
+
+        const loginRegex =
+            /^[A-Za-z0-9]{8}$/;
 
         const passwordRegex =
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{6,}$/;
 
-        // First Name Validation
+
+        // First Name
         if (!textRegex.test(firstName)) {
-            $("#message").html(
-                "<p class='error'>First Name must contain letters only.</p>"
+
+            showError(
+                "First Name must contain letters only."
             );
+
             return;
         }
 
-        // Last Name Validation
+
+        // Last Name
         if (!textRegex.test(lastName)) {
-            $("#message").html(
-                "<p class='error'>Last Name must contain letters only.</p>"
+
+            showError(
+                "Last Name must contain letters only."
             );
+
             return;
         }
 
-        // Mobile Validation
+
+        // Mobile
         if (!mobileRegex.test(mobile)) {
-            $("#message").html(
-                "<p class='error'>Mobile number must be exactly 10 digits.</p>"
+
+            showError(
+                "Mobile number must be exactly 10 digits."
             );
+
             return;
         }
 
-        // City Validation
+
+        // City
         if (!textRegex.test(city)) {
-            $("#message").html(
-                "<p class='error'>City must contain letters only.</p>"
+
+            showError(
+                "City must contain letters only."
             );
+
             return;
         }
 
-        // State Validation
+
+        // State
         if (!textRegex.test(state)) {
-            $("#message").html(
-                "<p class='error'>State must contain letters only.</p>"
+
+            showError(
+                "State must contain letters only."
             );
+
             return;
         }
 
-        // Country Validation
+
+        // Country
         if (!textRegex.test(country)) {
-            $("#message").html(
-                "<p class='error'>Country must contain letters only.</p>"
+
+            showError(
+                "Country must contain letters only."
             );
+
             return;
         }
 
-        // Login ID Validation
+
+        // Login ID
         if (!loginRegex.test(loginId)) {
-            $("#message").html(
-                "<p class='error'>Login ID must be exactly 8 alphanumeric characters.</p>"
+
+            showError(
+                "Login ID must be exactly 8 alphanumeric characters."
             );
+
             return;
         }
 
-        // Password Validation
+
+        // Password
         if (!passwordRegex.test(password)) {
-            $("#message").html(
-                "<p class='error'>" +
+
+            showError(
                 "Password must contain at least 1 uppercase, " +
-                "1 lowercase and 1 special character." +
-                "</p>"
+                "1 lowercase and 1 special character."
             );
+
             return;
         }
 
-        // Create JSON Object
+
+        // User Data
         const userData = {
+
             firstName,
+
             lastName,
+
             mobile,
+
             email,
+
             street,
+
             city,
+
             state,
+
             country,
+
             loginId,
+
             password
         };
 
-        console.log("Sending Data:", userData);
 
-        // AJAX POST Request
+        console.log(
+            "Sending Data:",
+            userData
+        );
+
+
+        // POST Task 1 API
         $.ajax({
-            url: "/api/users",
-            type: "POST",
-            contentType: "application/json",
-            data: JSON.stringify(userData),
 
+            url: "/api/users",
+
+            type: "POST",
+
+            contentType:
+                "application/json",
+
+            data:
+                JSON.stringify(userData),
+
+
+            // SUCCESS
             success: function (response) {
 
-                $("#message").html(
-                    "<p class='success'>" +
-                    response.message +
-                    "</p>"
+                console.log(
+                    "User Created Successfully:",
+                    response
                 );
 
-                $("#userForm")[0].reset();
+
+                if (
+                    response.success === true &&
+                    response.data
+                ) {
+
+                    // Save registered user
+                    sessionStorage.setItem(
+
+                        "registeredUser",
+
+                        JSON.stringify(
+                            response.data
+                        )
+
+                    );
+
+
+                    console.log(
+                        "User saved in sessionStorage:",
+                        sessionStorage.getItem(
+                            "registeredUser"
+                        )
+                    );
+
+
+                    // Directly open Live Users page
+                    window.location.replace(
+                        "/users.html"
+                    );
+
+                } else {
+
+                    showError(
+                        "User created but user data was not received."
+                    );
+
+                }
+
             },
 
+
+            // ERROR
             error: function (xhr) {
 
+                console.error(
+                    "Registration Error:",
+                    xhr
+                );
+
+
                 const errorMessage =
+
                     xhr.responseJSON?.message ||
+
                     "Something went wrong";
 
-                $("#message").html(
-                    "<p class='error'>" +
-                    errorMessage +
-                    "</p>"
+
+                showError(
+                    errorMessage
                 );
+
             }
+
         });
+
     });
+
+
+    // Error Function
+    function showError(message) {
+
+        $("#message").html(
+
+            "<p class='error'>" +
+
+            message +
+
+            "</p>"
+
+        );
+
+    }
+
 });
